@@ -1,0 +1,35 @@
+<!-- leave_rating.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Rating</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Leave a Rating</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="booking">Select Booking:</label>
+                <select name="booking" id="booking" class="form-control" required>
+                    {% for booking in bookings %}
+                    <option value="{{ booking.id }}">{{ booking.room.room_type }} - {{ booking.guest.user.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="rating">Rating (1 to 5):</label>
+                <input type="number" name="rating" id="rating" class="form-control" min="1" max="5" required>
+            </div>
+            <div class="form-group">
+                <label for="review">Review:</label>
+                <textarea name="review" id="review" class="form-control" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Rating</button>
+        </form>
+    </div>
+</body>
+</html>
