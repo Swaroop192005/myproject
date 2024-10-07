@@ -4,6 +4,24 @@ from .models import Room, Booking, Rating
 from datetime import datetime
 
 # views.py
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your account has been created! You can now log in.')
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})
+
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
@@ -12,13 +30,20 @@ def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
-            # Authenticate and log the user in
             auth_login(request, form.get_user())
-            return redirect('dashboard')  # Redirect to the dashboard or another page after login
+            return redirect('dashboard')  # Replace 'dashboard' with the name of your redirect page
     else:
         form = AuthenticationForm()
     
-    return render(request, 'registration/login.html', {'form': form})
+    return render(request, 'login.html', {'form': form})
+
+
+
+
+from django.shortcuts import render
+from django.contrib.auth.forms import AuthenticationForm
+
+
 
 def available_rooms(request):
     rooms = Room.objects.filter(status='Available')  # Corrected field name

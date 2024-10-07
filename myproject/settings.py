@@ -96,6 +96,15 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',  # Default SQLite database
     }
 }
+#DATABASES = {
+ #   'default': {
+  #      'ENGINE': 'django.db.backends.postgresql',
+   #     'NAME': 'Hotel_management',  # Replace with your database name
+    #    'USER': 'saksh',  # Replace with your PostgreSQL username
+     #   'HOST': 'localhost',  # If PostgreSQL is on your local machine
+      #  'PORT': '5432',  # Default PostgreSQL port
+    #}
+#}
 
 
 
