@@ -9,6 +9,13 @@
 <body>
     <div class="container">
         <h1>Dashboard</h1>
+
+        <!-- Search form -->
+        <form method="GET" action="{% url 'dashboard' %}">
+            <input type="text" name="q" placeholder="Search by guest name" value="{{ query }}">
+            <button type="submit">Search</button>
+        </form>
+
         <table class="table">
             <thead>
                 <tr>
@@ -29,6 +36,10 @@
                     <td>{{ booking.check_out_date }}</td>
                     <td>${{ booking.total_amount }}</td>
                     <td>{{ booking.booking_status }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No bookings found.</td>
                 </tr>
                 {% endfor %}
             </tbody>

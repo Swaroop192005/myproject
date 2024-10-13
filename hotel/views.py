@@ -73,9 +73,32 @@ def book_room(request):
     rooms = Room.objects.filter(status='Available')
     return render(request, 'book_room.html', {'rooms': rooms})
 
+from django.shortcuts import render
+from .models import Guest, Booking, Room
+
+from django.shortcuts import render
+from hotel.models import Booking
+
+from django.shortcuts import render
+from hotel.models import Booking
+
+# Add this function to your views.py file
+from django.shortcuts import render
+from hotel.models import Booking
+
 def dashboard(request):
-    bookings = Booking.objects.all()
+    # Fetch all bookings
+    bookings = Booking.objects.select_related('guest__user').all()
+    
+    # Check if there's a search query
+    query = request.GET.get('q')
+    if query:
+        bookings = bookings.filter(guest__user__name__icontains=query)  # Filtering by user profile's name
+
     return render(request, 'dashboard.html', {'bookings': bookings})
+
+
+
 
 def leave_rating(request):
     if request.method == 'POST':
