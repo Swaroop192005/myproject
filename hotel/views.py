@@ -86,16 +86,32 @@ from hotel.models import Booking
 from django.shortcuts import render
 from hotel.models import Booking
 
+from django.shortcuts import render
+from hotel.models import Booking
+from django.utils.dateparse import parse_date
+
 def dashboard(request):
     # Fetch all bookings
     bookings = Booking.objects.select_related('guest__user').all()
-    
-    # Check if there's a search query
+
+    # Check if there's a search query for guest name
     query = request.GET.get('q')
     if query:
-        bookings = bookings.filter(guest__user__name__icontains=query)  # Filtering by user profile's name
+        bookings = bookings.filter(guest__user__name__icontains=query)
 
-    return render(request, 'dashboard.html', {'bookings': bookings})
+    # Check if there's a search query for check-out date
+    checkout_date = request.GET.get('checkout_date')
+    if checkout_date:
+        # Parse the checkout_date to a Python date object
+        parsed_date = parse_date(checkout_date)
+        if parsed_date:
+            bookings = bookings.filter(check_out_date=parsed_date)
+
+    return render(request, 'dashboard.html', {
+        'bookings': bookings,
+        'query': query,
+        'checkout_date': checkout_date,
+    })
 
 
 

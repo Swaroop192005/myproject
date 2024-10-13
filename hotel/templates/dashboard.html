@@ -11,9 +11,10 @@
         <h1>Dashboard</h1>
 
         <!-- Search form -->
-        <form method="GET" action="{% url 'dashboard' %}">
-            <input type="text" name="q" placeholder="Search by guest name" value="{{ query }}">
-            <button type="submit">Search</button>
+        <form method="GET" action="{% url 'dashboard' %}" class="mb-3">
+            <input type="text" name="q" placeholder="Search by guest name" value="{{ query }}" class="form-control d-inline-block" style="width: auto; display: inline;">
+            <input type="date" name="checkout_date" placeholder="Check-out Date" value="{{ checkout_date }}" class="form-control d-inline-block" style="width: auto; display: inline;">
+            <button type="submit" class="btn btn-primary">Search</button>
         </form>
 
         <table class="table">
@@ -50,6 +51,7 @@
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Logout</button>
         </form>
+        
     </div>
 </body>
 </html>

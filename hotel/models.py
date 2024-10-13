@@ -16,19 +16,17 @@ class Guest(models.Model):
     user = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
     id_proof = models.CharField(max_length=50)
 
-class Room(models.Model):
-    ROOM_STATUS_CHOICES = [
-        ('Available', 'Available'),
-        ('Occupied', 'Occupied'),
-        ('Maintenance', 'Maintenance'),
-    ]
+from django.db import models
 
-    room_type = models.CharField(max_length=50)
+class Room(models.Model):
+    room_type = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=15, choices=ROOM_STATUS_CHOICES)
+    total_rooms = models.PositiveIntegerField(default=100)  # Total number of rooms
+    available_rooms = models.PositiveIntegerField(default=100)  # Currently available rooms
 
     def __str__(self):
-        return f"{self.room_type} - {self.status} - {self.price}"
+        return f"{self.room_type} - Price: {self.price} - Available: {self.available_rooms}"
+
 
 class Booking(models.Model):
     guest = models.ForeignKey(Guest, on_delete=models.CASCADE, related_name='bookings')
